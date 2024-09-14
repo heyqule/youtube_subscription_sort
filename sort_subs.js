@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Sort YouTube Subscriptions Left UI alphabatically
-// @namespace    http://heyqule.net/
+// @namespace    https://github.com/heyqule/youtube_subscription_sort
 // @version      0.1
 // @description  When you click "show more", you channel list from left menu sort alphabatically.
 // @author       heyqule
