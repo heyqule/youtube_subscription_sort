@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sort YouTube Subscriptions Left UI alphabatically
 // @namespace    https://github.com/heyqule/youtube_subscription_sort
-// @version      0.2
+// @version      0.3
 // @description  When you click "show more", you channel list from left menu sort alphabatically.
 // @author       heyqule
 // @match        https://www.youtube.com/*
@@ -27,7 +27,21 @@
         channels.concat(expandable_channels)
         channels.sort(sortChannels);
 
-        subscriptionList.innerHTML = '';
+        let trustedPolicy = null;
+        if (window.trustedTypes && window.trustedTypes.createPolicy) {
+            trustedPolicy = window.trustedTypes.createPolicy('youtube_subscription_sort', {
+                createHTML: (string, sink) => string
+            });
+        }
+
+
+        if (trustedPolicy) {
+            subscriptionList.innerHTML = trustedPolicy.createHTML('');
+        }
+        else
+        {
+            subscriptionList.innerHTML = '';
+        }
 
         channels.forEach(channel => {
             //Exclude show more and show less, they break after the sort.
@@ -37,18 +51,12 @@
         });
     }
 
-    if (window.trustedTypes && window.trustedTypes.createPolicy) {
-        window.trustedTypes.createPolicy('default', {
-            createHTML: (string, sink) => string
-        });
-    }
-
 
     const observer = new MutationObserver(() => {
         let show_more = document.querySelectorAll('div#sections ytd-guide-section-renderer:nth-child(2) ytd-guide-entry-renderer#expander-item')[0]
 
         if (show_more) {
-            console.log('Add click event...')
+            console.log('Adding click event...')
             show_more.addEventListener("click", sortSub);
             observer.disconnect();
         }
