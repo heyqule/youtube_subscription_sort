@@ -4,7 +4,6 @@
 // @version      0.2
 // @description  When you click "show more", you channel list from left menu sort alphabatically.
 // @author       heyqule
-// @match        https://www.youtube.com
 // @match        https://www.youtube.com/*
 // ==/UserScript==
 
